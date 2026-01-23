@@ -53,20 +53,45 @@
         }
 
         .back-btn {
-            color: var(--accent-brass);
-            text-decoration: none;
-            font-weight: bold;
-            font-family: 'Russo One', sans-serif;
-            border: 1px solid var(--accent-brass);
-            padding: 10px 20px;
-            border-radius: 4px;
-            transition: 0.3s;
-        }
+			position: relative;
+			color: var(--accent-brass) !important;
+			text-decoration: none;
+			font-weight: bold;
+			font-family: 'Russo One', sans-serif;
+			border: 2px solid var(--accent-brass) !important;
+			padding: 10px 25px;
+			border-radius: 4px;
+			transition: all 0.4s ease-in-out;
+			white-space: nowrap;
+			display: inline-block;
+			z-index: 1;
 
-        .back-btn:hover {
-            background: var(--accent-brass);
-            color: #000;
-        }
+			/* Вимикаємо фон повністю у звичайному стані */
+			background-image: none !important; 
+			background-color: transparent !important;
+		}
+
+		.back-btn:hover {
+			color: #c87533 !important;
+			border-color: #c87533 !important;
+			
+			/* Вмикаємо градієнт ТІЛЬКИ при наведенні */
+			background-image: linear-gradient(120deg, 
+				transparent 0%, 
+				rgba(240, 165, 0, 0.4) 50%, 
+				transparent 100%) !important;
+			background-size: 200% 100% !important;
+			background-color: rgba(240, 165, 0, 0.1) !important;
+			
+			transform: scale(1.05);
+			box-shadow: 0 0 15px rgba(240, 165, 0, 0.3);
+			animation: lightFlow 3s infinite linear;
+		}
+
+		@keyframes lightFlow {
+			0% { background-position: 200% 0; }
+			100% { background-position: -200% 0; }
+		}
 
         /* Головний контейнер */
         .container {
@@ -246,6 +271,7 @@
 				left: 15px;
 			}
 		}
+
     </style>
 </head>
 <body>
@@ -267,13 +293,13 @@
             <div class="option-card">
                 <div class="option-title">💎 ЛІЦЕНЗІЯ</div>
                 <div class="option-desc">Файл .mrpack для автоматичного імпорту</div>
-                <a href="https://drive.google.com/uc?export=download&id=1vW6uifp6TUQ1O2rX2eyZQAMqXQWZC4vB" class="dl-btn btn-license">ЗАВАНТАЖИТИ MRPACK</a>
+                <a href="https://drive.google.com/uc?export=download&id=1Zpp_wJAlL-G6cuvg0aR3yxCuJ5pgwLuj" class="dl-btn btn-license">ЗАВАНТАЖИТИ MRPACK</a>
             </div>
 
             <div class="option-card">
                 <div class="option-title">🏴‍☠️ ПІРАТКА</div>
                 <div class="option-desc">Архів .zip для ручного встановлення</div>
-                <a href="https://drive.google.com/uc?export=download&id=1yJpXA5H2mWJxu3iJj9od7qJCpy2HAuXG" class="dl-btn btn-pirate">ЗАВАНТАЖИТИ ZIP</a>
+                <a href="https://drive.google.com/uc?export=download&id=1svzHWdhmMdyYKP45XjeGlxdJsOIoiMI4" class="dl-btn btn-pirate">ЗАВАНТАЖИТИ ZIP</a>
             </div>
 
         </div>

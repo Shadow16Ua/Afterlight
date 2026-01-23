@@ -155,7 +155,29 @@
 		.top-left-logo:hover {
 			transform: scale(1.1); /* Легкий ефект при наведенні */
 		}
+		
+		/* Контейнер для кнопок: тепер вони в ряд */
+        .button-group {
+            display: flex;
+            flex-direction: row; /* Рядок за замовчуванням */
+            justify-content: center; /* Центрування групи */
+            gap: 20px; /* Відступ між кнопками */
+            margin-top: 10px;
+            flex-wrap: wrap; /* Дозволяє переноситись на мобільних */
+        }
 
+        /* Адаптивність: на телефонах вони стануть одна під одною */
+        @media (max-width: 600px) {
+            .button-group {
+                flex-direction: column;
+                align-items: center;
+                gap: 15px;
+            }
+            .cta-button {
+                width: 250px; /* Однакова ширина на мобільних */
+                text-align: center;
+            }
+        }
     </style>
 </head>
 <body>
@@ -166,12 +188,16 @@
         <p class="subtitle">Vanilla + Create Mod | Forge 1.20.1</p>
         
         <div class="ip-box" onclick="copyIP()">
-            <div class="ip-text">play.yourserver.com</div>
+            <div class="ip-text">afterlight.joinserver.xyz</div>
             <div class="click-hint" id="ip-hint">Натисніть, щоб скопіювати IP</div>
         </div>
 
-        <a href="download.html" class="cta-button">ЯК ПОЧАТИ ГРУ?</a>
+        <div class="button-group">
+			<a href="download.html" class="cta-button">Як почати гру?</a>
+			<a href="rules.html" class="cta-button rules-btn">Правила сервера</a>
+		</div>
     </div>
+	
 
     <div class="features">
         <div class="card">
@@ -190,7 +216,7 @@
 
     <script>
         function copyIP() {
-            navigator.clipboard.writeText("play.yourserver.com");
+            navigator.clipboard.writeText("afterlight.joinserver.xyz");
             const hint = document.getElementById("ip-hint");
             hint.innerText = "IP СКОПІЙОВАНО!";
             hint.style.color = "#f0a500";
