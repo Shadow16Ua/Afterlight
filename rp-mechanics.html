@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="favicon.png">
+    <title>RP Механіки | SunSet Create</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Russo+One&family=Roboto:wght@400;700&display=swap');
+
+        :root {
+            --bg-color: #1a1a1a;
+            --accent-brass: #f0a500;
+            --accent-copper: #c87533;
+            --text-color: #e0e0e0;
+            --panel-bg: #2d2d2d;
+            --card-dark: #222;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.6;
+        }
+
+		.nav-bar {
+			width: 100%;
+			padding: 15px 0; /* Прибираємо бокові паддінги для точного центру */
+			background: rgba(0,0,0,0.9);
+			display: flex;
+			justify-content: space-between; /* Розподіляє: ліво - центр - право */
+			align-items: center;
+			border-bottom: 2px solid var(--accent-copper);
+			position: sticky; 
+			top: 0; 
+			z-index: 1000;
+		}
+
+		/* Ліва та права частини однакові за розміром */
+		.nav-side { 
+			flex: 1; 
+			display: flex; 
+			align-items: center; 
+			padding-left: 20px;
+		}
+
+		/* Додаємо порожній блок справа для балансу */
+		.nav-side-right {
+			flex: 1;
+		}
+        .nav-logo { 
+			position: absolute;
+			top: 27px;
+			left: 20px;
+			width: 150px; /* Розмір логотипу */
+			height: auto;
+			z-index: 1000;
+			transition: transform 0.3s ease;
+		}
+
+        .back-btn {
+			position: relative;
+			color: var(--accent-brass) !important;
+			text-decoration: none;
+			font-weight: bold;
+			font-family: 'Russo One', sans-serif;
+			border: 2px solid var(--accent-brass) !important;
+			padding: 10px 25px;
+			border-radius: 4px;
+			transition: all 0.4s ease-in-out;
+			white-space: nowrap;
+			display: inline-block;
+			z-index: 1;
+
+			/* Вимикаємо фон повністю у звичайному стані */
+			background-image: none !important; 
+			background-color: transparent !important;
+		}
+
+		.back-btn:hover {
+			color: #c87533 !important;
+			border-color: #c87533 !important;
+			
+			/* Вмикаємо градієнт ТІЛЬКИ при наведенні */
+			background-image: linear-gradient(120deg, 
+				transparent 0%, 
+				rgba(240, 165, 0, 0.4) 50%, 
+				transparent 100%) !important;
+			background-size: 200% 100% !important;
+			background-color: rgba(240, 165, 0, 0.1) !important;
+			
+			transform: scale(1.05);
+			box-shadow: 0 0 15px rgba(240, 165, 0, 0.3);
+			animation: lightFlow 3s infinite linear;
+		}
+		
+		@keyframes lightFlow {
+			0% { background-position: 200% 0; }
+			100% { background-position: -200% 0; }
+		}
+
+        /* Контент */
+        .container {
+            max-width: 1100px;
+            width: 90%;
+            margin: 20px auto;
+            background: var(--panel-bg);
+            padding: 40px;
+            border-radius: 8px;
+            border: 2px solid #444;
+        }
+
+        h1 {
+            font-family: 'Russo One', sans-serif;
+            color: var(--accent-brass);
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+			margin-top: 0;
+        }
+
+        .season-info {
+            text-align: center;
+            color: var(--accent-copper);
+            font-weight: bold;
+            margin-bottom: 40px;
+        }
+
+        .section {
+            margin-bottom: 30px;
+            background: var(--card-dark);
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid #333;
+        }
+
+        .section-header {
+            background: #2a2a2a;
+            padding: 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid var(--accent-copper);
+        }
+
+        .section-header h2 {
+            margin: 0;
+            font-family: 'Russo One', sans-serif;
+            font-size: 1.4rem;
+            font-weight: 400;
+            color: var(--accent-brass);
+        }
+
+        .section-content {
+            padding: 25px;
+            display: block; /* Можна зробити toggle на JS */
+        }
+
+        h3 { color: var(--accent-copper); font-weight: 400; border-bottom: 1px solid #444; padding-bottom: 5px; }
+        
+        .rp-post-box {
+            background: rgba(240, 165, 0, 0.1);
+            border-left: 4px solid var(--accent-brass);
+            padding: 15px;
+            margin: 15px 0;
+        }
+
+        .punishment {
+            color: #ff9e9e;
+            background: rgba(255, 0, 0, 0.1);
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            display: inline-block;
+            margin-top: 10px;
+        }
+
+        ul { padding-left: 20px; }
+        li { margin-bottom: 10px; }
+
+        @media (max-width: 600px) {
+            .nav-bar { flex-direction: column; gap: 15px; }
+            .container { padding: 20px; }
+            h1 { font-size: 1.8rem; }
+        }
+		.subtitle {
+			display: block;          /* Робить блок на всю ширину для центрування */
+			text-align: center;      /* Центрує текст всередині блоку */
+			color: #c87533;          /* Зміни на #ffffff (білий) або #f0a500 (золотий) */
+			margin: 10px auto 40px;  /* Відступи: зверху, з боків (авто), знизу */
+			font-weight: bold;
+			font-size: 1.1rem;
+			letter-spacing: 1px;     /* Трохи розсунемо літери для стилю */
+			text-transform: uppercase; /* Робить текст великими літерами */
+		}
+		
+    </style>
+
+<body>
+    <nav class="nav-bar">
+        <div class="nav-side">
+            <a href="index.html"><img src="logo.png" alt="Logo" class="nav-logo"></a>
+        </div>
+        <a href="index.html" class="back-btn">← НА ГОЛОВНУ</a>
+        <div class="nav-side"></div>
+    </nav>
+	</head>
+
+    <div class="container">
+        <h1>Механіки ROLEPLAY</h1>
+        <div class="subtitle">AFTERLIGHT Season 1 • Офіційний звід правил взаємодії</div>
+
+        <h2>1. Механіка дипломатії</h2>
+        <p>Дипломатія та політика на сервері — важлива складова гри, яка забезпечує взаємодію, торгівлю, взаємопрацю та взаєморозвиток між гравцями. 
+		В цілях регуляції процесів та недопуску політичної анархії, існує механіка дипломатії, яка обмежує можливість виникнення безпідставних війн.</p>
+        
+        <p>Щоб вести політику, необхідно заявляти про свої дії в каналі <b>#rp-posts</b> в Discord. Адміністрація зараховує ці дії для подальшого розвитку відносин.</p>
+
+        <h3>Покращення відносин:</h3>
+        <p>Дружня взаємодія не є обмеженою. Підписати торгівельний, військово-політичний або економічний договір можна безперешкодно, написавши про це РП-пост.</p>
+
+        <h3>Погіршення відносин:</h3>
+        <p>Погіршення відносин веде виключно до одного — до війни. Ускладнення починається через інцидент або провокацію. Щоб оголосити війну, необхідно написати 3 РП-пости:</p>
+        <ul>
+            <li><b>1. Опис інциденту / провокації:</b> база для подальшого погіршення.</li>
+            <li><b>2. Casus belli (привід для війни):</b> фабрикація причини через новий інцидент АБО пояснення народу політичної вигоди війни (імперські амбіції тощо).</li>
+            <li><b>3. Оголошення війни:</b> фінальний пост з офіційними цілями або ультиматумом.</li>
+        </ul>
+
+        <h3>Можливі акції (Рівні відносин):</h3>
+        <div class="rule-block">
+            <b>Рівень 1:</b> Можливість заборонити відвідування вашої території. 
+            <span class="punishment">Покарання за порушення: бан на 1 годину після попередження.</span>
+        </div>
+        <div class="rule-block">
+            <b>Рівень 2:</b> Можливість здійснювати диверсії (сили розвідки/ССО). 
+            <ul>
+                <li>Диверсія проводиться групою від 4 осіб.</li>
+                <li>Фокус тільки на одному об'єкті (заборонено підривати все місто).</li>
+                <li>Максимум 3 вибухи. Цільове вбивство гравців заборонено (тільки самозахист).</li>
+            </ul>
+        </div>
+        <div class="rule-block">
+            <b>Рівень 3 (Війна):</b> Дозволені озброєні провокації та рейди.
+            <ul>
+                <li><b>Рейд:</b> проникнення на чужу територію для вбивства конкретної особи (мінімум 3 людини), підриву цілі (мінімум 2 людини) або для розвідки (мінімум 1 людина) </li>
+                <li>Дозволяється вбивати гравців, що заважають виконанню цілі.</li>
+            </ul>
+        </div>
+
+        <h2>2. Механіка угруповань та організацій</h2>
+        <p>Окрім міст, на сервері діють угруповання. Військові організації мають суворі обмеження, щоб обмежити безупинну злочинність.</p>
+
+        <h3>Вимоги для створення військового угруповання:</h3>
+        <ul>
+            <li>Наявність конкретного лідера.</li>
+            <li>Мінімум 4 постійних учасники.</li>
+            <li>Конкретна мета (боротьба з окупацією, партизанська діяльність, ПВК).</li>
+        </ul>
+
+        <h3>Діяльність організацій:</h3>
+        <ul>
+            <li>Підрив стратегічних об'єктів (не більше 5 вибухів).</li>
+            <li><b>ЗАБОРОНЕНО</b> підрив складів і ваултів, де зберігаються всі ресурси міста (крім стану війни).</li>
+            <li>Дозволено викрадення чиновників та лідерів шляхом захоплення у "трапку".</li>
+        </ul>
+
+        <h3>Боротьба з угрупованнями:</h3>
+        <p><b>Варіант 1 (Поліція серверу):</b> Оголошення у всесерверний розшук. Весь сервер має право відкривати вогонь, поліція використовує наручники та шокери.</p>
+        <p><b>Варіант 2 (Локальна поліція):</b> Діє тільки в межах своєї країни або на Диких землях. Використання наручників заборонено (тільки "трапки").</p>
+        <div class="rule-block">
+            <b>Правило одного покарання:</b> Після арешту терорист втрачає свій статус. Повторний арешт без нових причин карається адміністрацією (зазвичай 2 години бана арештувавшому).
+        </div>
+
+        <h2>3. Механіка війни</h2>
+        <p>Війна — це покрокове захоплення провінцій. На полі битви необхідно заволодіти абсолютною домінацією, винищивши ворожу сторону.</p>
+
+        <h3>Формат битви:</h3>
+        <ul>
+            <li><b>Життя:</b> Кожен боєць має лише 1 життя. Після смерті повернення на поле заборонено.</li>
+            <li><b>Час:</b> Обмежений до 20 хвилин. Кожне продовження — +5 хвилин.</li>
+            <li><b>Перемога:</b> Якщо інша сторона втекла або була повністю знищена.</li>
+            <li><b>Заборона:</b> Використання елітр та засобів, що фатально навантажують сервер.</li>
+        </ul>
+
+        <h3>Статуси провінцій:</h3>
+        <ul>
+            <li><b>Поле:</b> Окупація не веде до капітуляції, але дає перевагу на переговорах.</li>
+            <li><b>Місто / Столиця:</b> Взяття цих об'єктів веде до офіційної безумовної капітуляції сторони.</li>
+        </ul>
+        <div class="rule-block">
+            <b>Важливо:</b> Гравці, що перебувають у країні менше 3 днів до початку війни, до битви не допускаються.
+        </div>
+    </div>
+
+</body>
+</html>
