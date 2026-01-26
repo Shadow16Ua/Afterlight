@@ -182,11 +182,7 @@
         ul { padding-left: 20px; }
         li { margin-bottom: 10px; }
 
-        @media (max-width: 600px) {
-            .nav-bar { flex-direction: column; gap: 15px; }
-            .container { padding: 20px; }
-            h1 { font-size: 1.8rem; }
-        }
+       
 		.subtitle {
 			display: block;          /* Робить блок на всю ширину для центрування */
 			text-align: center;      /* Центрує текст всередині блоку */
@@ -197,7 +193,12 @@
 			letter-spacing: 1px;     /* Трохи розсунемо літери для стилю */
 			text-transform: uppercase; /* Робить текст великими літерами */
 		}
-		
+
+		@media (max-width: 600px) {
+            .nav-bar { padding: 10px 20px; flex-direction: column; gap: 15px; }
+            .container { padding: 20px; }
+            h1 { font-size: 1.8rem; }
+        }
     </style>
 
 <body>
@@ -299,4 +300,5 @@
 
 </body>
 </html>
+
 
