@@ -194,31 +194,10 @@
 			text-transform: uppercase; /* Робить текст великими літерами */
 		}
 
-		/* Адаптація для телефонів */
-        /* Адаптація для телефонів */
-        @media (max-width: 600px) {
-            .nav-bar {
-                flex-direction: column !important; /* Розташовуємо елементи в стовпчик */
-                height: auto !important;
-                padding: 15px 0 !important;
-                gap: 15px; /* Відстань між лого і кнопкою */
-            }
-
-            .nav-side {
-                display: none !important;
-            }
-            
-            .nav-logo {
-                display: none !important;
-            }
-            .nav-empty, .nav-side-right {
-                display: none !important; /* Ховаємо порожні блоки, вони не потрібні на моб */
-            }
-
-            .back-btn {
-                width: 80%; /* Кнопка на майже всю ширину екрану */
-                text-align: center;
-            }
+		@media (max-width: 600px) {
+            .nav-bar { padding: 10px 20px; flex-direction: column; gap: 15px; }
+            .container { padding: 20px; }
+            h1 { font-size: 1.8rem; }
         }
     </style>
 
@@ -321,6 +300,7 @@
 
 </body>
 </html>
+
 
 
 
