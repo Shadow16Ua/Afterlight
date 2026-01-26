@@ -195,9 +195,33 @@
 		}
 
 		@media (max-width: 600px) {
-            .nav-bar { padding: 10px 20px; flex-direction: column; gap: 15px; }
-            .container { padding: 20px; }
-            h1 { font-size: 1.8rem; }
+            .nav-bar {
+                flex-direction: column !important; /* Розташовуємо елементи в стовпчик */
+                height: auto !important;
+                padding: 15px 0 !important;
+                gap: 15px; /* Відстань між лого і кнопкою */
+            }
+
+            .nav-side {
+                flex: none !important;
+                width: 100%;
+                justify-content: center !important; /* Лого по центру */
+                padding-left: 0 !important;
+                margin: 0 !important;
+            }
+
+            .nav-logo {
+                margin: 0 !important; /* Прибираємо лівий відступ на мобільних */
+            }
+
+            .nav-empty, .nav-side-right {
+                display: none !important; /* Ховаємо порожні блоки, вони не потрібні на моб */
+            }
+
+            .back-btn {
+                width: 80%; /* Кнопка на майже всю ширину екрану */
+                text-align: center;
+            }
         }
     </style>
 
@@ -300,5 +324,6 @@
 
 </body>
 </html>
+
 
 
