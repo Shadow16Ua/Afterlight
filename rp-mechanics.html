@@ -195,8 +195,15 @@
 		}
 
 		/* Адаптація для телефонів */
+        /* Адаптація для телефонів */
         @media (max-width: 600px) {
-            /* 1. ПОВНІСТЮ ПРИБИРАЄМО ЛОГОТИП */
+            .nav-bar {
+                flex-direction: column !important; /* Розташовуємо елементи в стовпчик */
+                height: auto !important;
+                padding: 15px 0 !important;
+                gap: 15px; /* Відстань між лого і кнопкою */
+            }
+
             .nav-side {
                 display: none !important;
             }
@@ -204,23 +211,13 @@
             .nav-logo {
                 display: none !important;
             }
-
-            /* 2. ЦЕНТРУЄМО КНОПКУ */
-            .nav-bar {
-                flex-direction: column !important;
-                padding: 15px 0 !important;
-                justify-content: center !important;
+            .nav-empty, .nav-side-right {
+                display: none !important; /* Ховаємо порожні блоки, вони не потрібні на моб */
             }
 
             .back-btn {
-                width: 80%; /* Робимо кнопку зручною для натискання пальцем */
-                margin: 0 auto !important;
+                width: 80%; /* Кнопка на майже всю ширину екрану */
                 text-align: center;
-            }
-
-            /* Ховаємо зайві порожні блоки, якщо вони є */
-            .nav-empty, .nav-side-right {
-                display: none !important;
             }
         }
     </style>
@@ -324,6 +321,7 @@
 
 </body>
 </html>
+
 
 
 
