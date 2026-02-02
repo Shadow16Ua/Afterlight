@@ -15,14 +15,30 @@
             --panel-bg: #2d2d2d;
         }
 
-        body {
-            margin: 0;
-            padding: 0;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            font-family: 'Roboto', sans-serif;
-            background-image: radial-gradient(circle at 50% 50%, #2a2a2a 0%, #1a1a1a 100%);
-        }
+        html, body {
+			width: 100%;
+			margin: 0;
+			padding: 0;
+			overflow-x: hidden;
+		}
+
+		body {
+			margin: 0;
+			padding: 0;
+			/* Заміна градієнта на картинку */
+			background-image: url('Parlament.png'); /* Вкажи назву свого файлу тут */
+			background-attachment: fixed;    /* Фон не рухається при скролі */
+			background-position: center;     /* Центрування картинки */
+			background-repeat: no-repeat;    /* Заборона повторення */
+			background-size: cover;          /* Розтягування на весь екран */
+			
+			color: var(--text-color);
+			font-family: 'Roboto', sans-serif;
+			min-height: 100vh;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+		}
 
         /* Hero Section */
         .hero {
@@ -33,7 +49,7 @@
             align-items: center;
             text-align: center;
             /* Фон - можете змінити посилання на свою картинку */
-            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://media.forgecdn.net/attachments/305/444/create_cinematic_2.png');
+            background: transparent !important;
             background-size: cover;
             background-position: center;
             border-bottom: 5px solid var(--accent-brass);
