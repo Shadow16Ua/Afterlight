@@ -2,6 +2,7 @@
 <html lang="uk">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/png" href="favicon.png">
     <title>Правила | AfterLight</title>
     <style>
@@ -23,7 +24,11 @@
             overflow-x: hidden;
             margin: 0;
             padding: 0;
-            background-color: var(--bg-color);
+            background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('Parlament.png');
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
             color: var(--text-color);
             font-family: 'Roboto', sans-serif;
             line-height: 1.6;
@@ -106,6 +111,13 @@
             border-radius: 8px;
             border: 4px solid #444;
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+			background: rgba(255, 255, 255, 0.05) !important; /* Дуже тонка біла основа */
+			backdrop-filter: blur(10px); /* Розмиття того, що ПІД контейнером */
+			-webkit-backdrop-filter: blur(15px); /* Для iPhone/Safari */
+			
+			/* Латунна рамка зі світінням */
+			border: 1px solid rgba(240, 165, 0, 0.3);
+			box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
         }
 
         h1 {
@@ -302,10 +314,6 @@
                 <span class="rule-id">3.5.</span> Заборонено будівництво споруд еротичного, образливого чи нацистського характеру.
                 <div class="punishment">Покарання: Бан на 3 дні та вимога знести споруду.</div>
             </div>
-			<div class="rule-item">
-                <span class="rule-id">3.6.</span> Дозволено мати 1 основний клейм (запривачену територію) і 1 саб-клейм (окрему запривачену територію).
-                <div class="punishment">Покарання: Вимога розпривату, при повторенні або ігнорування бан на 1 годину</div>
-            </div>
         </div>
 
 		<div class="rule-section">
@@ -386,7 +394,4 @@
     </div>
 
     </body>
-
 </html>
-
-
