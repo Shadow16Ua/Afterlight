@@ -4,29 +4,12 @@
     <meta charset="UTF-8">
 	<link rel="icon" type="image/png" href="favicon.png">
     <title>Завантаження | Create Server</title>
+	<link rel="stylesheet" href="style.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Russo+One&family=Roboto:wght@400;700&display=swap');
 
 		{
             box-sizing: border-box;
-        }
-		
-        :root {
-            --bg-color: #1a1a1a;
-            --accent-brass: #f0a500;
-            --accent-copper: #c87533;
-            --discord-color: #5865F2;
-            --text-color: #e0e0e0;
-            --panel-bg: #2d2d2d;
-            --card-dark: #222;
-        }
-		
-		html, body {
-            width: 100%;
-            max-width: 100%;
-            overflow-x: hidden; /* 2. ЗАБОРОНА ГОРИЗОНТАЛЬНОГО СКРОЛУ */
-            margin: 0;
-            padding: 0;
         }
 
         body {
@@ -45,57 +28,6 @@
             flex-direction: column;
             align-items: center;
         }
-
-        /* Навігація */
-        .nav-bar {
-            width: 100%;
-            padding: 20px;
-            background: rgba(0,0,0,0.5);
-            display: flex;
-            justify-content: center;
-            border-bottom: 2px solid var(--accent-copper);
-        }
-
-        .back-btn {
-			position: relative;
-			color: var(--accent-brass) !important;
-			text-decoration: none;
-			font-weight: bold;
-			font-family: 'Russo One', sans-serif;
-			border: 2px solid var(--accent-brass) !important;
-			padding: 10px 25px;
-			border-radius: 4px;
-			transition: all 0.4s ease-in-out;
-			white-space: nowrap;
-			display: inline-block;
-			z-index: 1;
-
-			/* Вимикаємо фон повністю у звичайному стані */
-			background-image: none !important; 
-			background-color: transparent !important;
-		}
-
-		.back-btn:hover {
-			color: #c87533 !important;
-			border-color: #c87533 !important;
-			
-			/* Вмикаємо градієнт ТІЛЬКИ при наведенні */
-			background-image: linear-gradient(120deg, 
-				transparent 0%, 
-				rgba(240, 165, 0, 0.4) 50%, 
-				transparent 100%) !important;
-			background-size: 200% 100% !important;
-			background-color: rgba(240, 165, 0, 0.1) !important;
-			
-			transform: scale(1.05);
-			box-shadow: 0 0 15px rgba(240, 165, 0, 0.3);
-			animation: lightFlow 3s infinite linear;
-		}
-
-		@keyframes lightFlow {
-			0% { background-position: 200% 0; }
-			100% { background-position: -200% 0; }
-		}
 
         /* Головний контейнер */
         .container {
@@ -279,7 +211,6 @@
 			z-index: 1000;
 			transition: transform 0.3s ease;
 		}
-        .nav-logo:hover { filter: drop-shadow(0 0 8px var(--accent-brass)); }
 
 		@media (max-width: 600px) {
             .nav-bar { padding: 10px 20px; flex-direction: column; gap: 15px; }
@@ -308,13 +239,13 @@
             <div class="option-card">
                 <div class="option-title">💎 ЛІЦЕНЗІЯ</div>
                 <div class="option-desc">Файл .mrpack для автоматичного імпорту</div>
-                <a href="https://drive.google.com/uc?export=download&id=1cTJWnK9B7nUmr6jxH84lKxB7-UeOOKih" class="dl-btn btn-license">ЗАВАНТАЖИТИ MRPACK</a>
+                <a href="https://drive.google.com/uc?export=download&id=1DR2-3a9vrr-xr-FlM9pIhIw6pQ_7VE1g" class="dl-btn btn-license">ЗАВАНТАЖИТИ MRPACK</a>
             </div>
 
             <div class="option-card">
                 <div class="option-title">🏴‍☠️ ПІРАТКА</div>
                 <div class="option-desc">Архів .zip для ручного встановлення</div>
-                <a href="https://drive.google.com/uc?export=download&id=1aVTKZDku1v5VW7Gcb0kZ6aR0qu37Gh4d" class="dl-btn btn-pirate">ЗАВАНТАЖИТИ ZIP</a>
+                <a href="https://drive.google.com/uc?export=download&id=1-3a_D-cXLXSJPdEaSv37I1-S9pko0cw1" class="dl-btn btn-pirate">ЗАВАНТАЖИТИ ZIP</a>
             </div>
 
         </div>
@@ -351,5 +282,4 @@
     </div>
 
 </body>
-
 </html>
