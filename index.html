@@ -223,25 +223,202 @@
             .cta-button { width: 280px; text-align: center; }
             h1 { font-size: 3rem; }
         }
+        
+        /* Бокові панелі - Вертикальні прямокутники */
+        .side-panel {
+            position: absolute; /* Тепер вони прив'язані до Hero-секції, а не до екрана */
+            top: 51%;
+            transform: translateY(-50%);
+            width: 260px;       /* Ширина */
+            height: 480px;      /* Висота для вертикальної форми */
+            background: rgba(20, 20, 20, 0.85);
+            border: 2px solid var(--accent-copper);
+            border-radius: 12px;
+            z-index: 10;
+            backdrop-filter: blur(10px);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .side-panel:hover {
+            transform: translateY(-52%) scale(1.05); /* Блок трохи піднімається і збільшується */
+            border-color: var(--accent-brass);    /* Рамка стає яскравішою (латунною) */
+            box-shadow: 0 0 30px rgba(240, 165, 0, 0.4); /* З'являється м'яке золото навколо */
+            background: rgba(30, 30, 30, 0.95);    /* Стає трохи щільнішою */
+        }
+
+        .left-panel { left: 140px; }
+        .right-panel { right: 140px; }
+
+        /* Контейнер для слайдів */
+        .slider-container {
+            flex-grow: 1;
+            position: relative;
+        }
+
+        .slide {
+            display: none;
+            height: 100%;
+            padding: 15px;
+            box-sizing: border-box;
+            text-align: center;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .slide.active { display: flex; animation: fadeIn 0.4s ease; }
+
+        /* Зображення всередині віджета */
+        .slide-img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 6px;
+            margin-bottom: 12px;
+            border: 1px solid rgba(240, 165, 0, 0.3);
+        }
+
+        .slide h3 {
+            color: var(--accent-brass);
+            font-family: 'Russo One', sans-serif;
+            margin: 5px 0;
+            font-size: 1.2rem;
+        }
+
+        .slide p {
+            font-size: 0.9rem;
+            color: #ddd;
+            line-height: 1.4;
+        }
+
+        /* Навігація внизу */
+        .slider-nav {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            background: rgba(0,0,0,0.3);
+        }
+
+        .slider-nav button {
+            background: none;
+            border: none;
+            color: var(--accent-brass);
+            cursor: pointer;
+            font-size: 1.5rem;
+            transition: 0.3s;
+        }
+
+        .slider-nav button:hover { transform: scale(1.2); }
+
+        /* Приховуємо на малих екранах, щоб не заважали */
+        @media (max-width: 1300px) {
+            .side-panel { display: none; }
+        }
+
+        /* Кнопка всередині бокових панелей */
+        .side-btn {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 8px 20px;
+            background: transparent;
+            border: 1px solid var(--accent-copper);
+            color: var(--accent-copper) !important; /* !important щоб перебити стандартний синій */
+            text-decoration: none !important;      /* Прибираємо підкреслення */
+            font-family: 'Russo One', sans-serif;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 5;
+        }
+
+        /* Ефект при наведенні на кнопку */
+        .side-btn:hover {
+            background-color: var(--accent-copper);
+            color: #fff !important;
+            box-shadow: 0 0 15px rgba(200, 117, 51, 0.6);
+            transform: scale(1.05);
+        }
     </style>
 </head>
 <body>
 
     <div class="hero">
+        <div class="side-panel left-panel">
+        <div class="slider-container" id="left-slider">
+            <div class="slide active">
+                <img src="https://static.android.com.pl/uploads/2022/10/discord_co_to-1280x960.jpg" class="slide-img" alt="Discord">
+                <h3>DISCORD</h3>
+                <p>Наш дискорд сервер</p>
+                <a href="https://discord.gg/zhKqAJyVpH" class="side-btn" target="_blank" rel="noopener">ПРИЄДНАТИСЬ</a>
+            </div>
+
+            <div class="slide">
+                <img src="https://popsters.com/blog/content/all/mceu0slzguje501imqzas166n4rjfut4f7.jpg" class="slide-img" alt="Telegram">
+                <h3>TELEGRAM</h3>
+                <p>Телеграм нашого серверу!</p>
+                <a href="https://t.me/AfterLightAdministration" class="side-btn" target="_blank" rel="noopener">ПІДПИСАТИСЬ</a>
+            </div>
+
+            <div class="slide">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRKvIt8JC26d5W825jcwH6KMYGmG_UMDfacLg&s" class="slide-img" alt="TikTok">
+                <h3>TIKTOK</h3>
+                <p>ТікТок нашого серверу!</p>
+                <a href="https://www.tiktok.com/@segfaulted_g.o.u" class="side-btn" target="_blank" rel="noopener">ПІДПИСАТИСЬ</a>
+            </div>
+
+            <div class="slide">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQfo992cbbg6fnrHNIRxGcLqbr09DJHjwoHdQ&s" class="slide-img" alt="YouTube"> 
+                <h3>YOUTUBE</h3>
+                <p>Ютуб нашого тех-адміна!</p>
+                <a href="https://www.youtube.com/@Sh4d%C3%B8w_YT333" class="side-btn" target="_blank" rel="noopener">ПІДПИСАТИСЬ</a>
+            </div>
+
+        </div>
+        <div class="slider-nav">
+            <button onclick="prevSlide('left-slider')">❮</button>
+            <button onclick="nextSlide('left-slider')">❯</button>
+        </div>
+    </div>
+
+    <div class="side-panel right-panel">
+        <div class="slider-container" id="right-slider"> 
+            <div class="slide active">
+                <img src="Parlament.png" class="slide-img" alt="News">
+                <h3>Затримка з'їзду</h3>
+                <p>Через відключення світла з'їзд 02.08 переноситься на 02.15</p>
+            </div>
+            <div class="slide">
+                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAjVBMVEVSpDUAAAArZRsqYxwAAANWqjdSpTRQoDEnYRgeSRdop0+G1mF9zVuJ12RTrDcJBAQFCAV7w1gkVhlIjS9Gjy0kWhkdRRWN4Wdtvk5OoDFUozhOoi5WpTglXRcoYB5JkjMhSBQcQBRarD0rZRhtpVSE0mV6x1R90GFOmzIoVx0YSg9+wVp+0lsJBgBWqT5sUnT+AAADKElEQVR4nO3d23aaQABGYYgwmCaYE2JFMWqaNk1N3v/xilddS4aVf5QJY7q/a5g128ETARNFAAAAAAAAAAAAAAAAAAAAAIBzZtQNl8bI25qlvOl+AvrGx6jE7ZYmdZhJk7iUt5XncBRT1GNNvarlSUdmOhKHHY8f9WPjiL4qLVYj1VSeSTW5v1BHrQvjcQ2bp9bj+EKlF0bLWh51XDg8aY8qLC81r+vNRB433ajDXm4Kr0epMUWsS+WBU4dRHzwfpXJhEsfyGlaT/eaiwuu7hTEP8kwST2tYeH07pJDCLhRS2B8KKexCIYX9oZDCLhRS2B8KKexCIYX9oZDCLhRS2B8KKexCIYX9oZDCLhRS2F9glOqFcbxNVROXQq/X01Sm+qZ7ki8DetIH/ZFW+tVkRxQutrnoKt/V4hViq4vpTh02n6WVzzWMFumV7Fm/lKt+lkfNXa55PMb2WrR7vl7fq15/qsNe/9p67WtkopfFi8PLx8tcHXfuO1BmTOVQmHl89XBlRJXJ5L4kztRh/T4Hnbitoc/XR1+MwxpSGCYKKQwfhRSGj8KvUDj/SoXN5+zWJ2SnNcysn+iHzvrHdm7I7SgN6duTjXmPLCfQnL4fmvb+Rj8b6d2y/j1tuZ86FNbt/ZsRwjlMJ6OR5Q7JsUOh7azcUx1O4bKZYPsE2kruS2Lb/qNxOIVpWV6WB9brjcMalq+H+5flpgznidjxZwf9nkK7m3AKJzcntlgltxR+HgoppHB4FFJI4fAopJDC4VFIIYXDo5BCCodHIYUUDo9CCikcHoUUUjg8Cr9mYeJ2pYJl2/ALT70UI/TCZoJ3qj9351iYxLcz+W7M2Tkepc0M5cJ8Zjuiwy+Md/Jtk7szLUznosx62dg5FKr7m/MsPPkXByj8TBR+iML
+                BUfghCgdH4YcoHNx/UPjWzOeAS6Htk3czxFtYhRanfrcI6J6Z1H6Uvqv7m631tFVIa2hdQof/u9Zx41Q4hdn+F6oOzy5d5Zk+wMwqnF9MWuyDWj/KlS/kAbK89QjtH6SwClvTcymc20/BhVMYfbf6zAEAAAAAAAAAAAAAAABC8BcfaY0kWHg/YgAAAABJRU5ErkJggg==" class="slide-img" alt="Event">
+                <h3>EVENT</h3>
+                <p>Сьогодні о 20:00 — відкриття ТЦ "Нікольський" на спавні.</p>
+            </div>
+        </div>
+        <div class="slider-nav">
+            <button onclick="prevSlide('right-slider')">❮</button>
+            <button onclick="nextSlide('right-slider')">❯</button>
+        </div>
+    </div>
+
         <img src="logo.png" alt="Logo" class="nav-logo">
         <h1>AfterLight</h1>
         <p class="subtitle">Vanilla + Create Mod | Forge 1.20.1</p>
         
         <div class="ip-box" onclick="copyIP(event)">
             <div class="ip-text" id="server-ip">afterlight.joinserver.xyz</div>
-            <div class="click-hint" id="ip-hint">Натисніть, щоб скопіювати IP</div>
+            <div class="click-hint" id="ip-hint" data-key="ip-hint">Натисніть, щоб скопіювати IP</div>
         </div>
 
         <div class="button-group">
-            <a href="download.html" class="cta-button">Як почати гру?</a>
-            <a href="rules.html" class="cta-button">Правила сервера</a>
-            <a href="rp-mechanics.html" class="cta-button">RP Механіки</a>
-            
+            <a href="download.html" class="cta-button" data-key="btn-how">Як почати гру?</a>
+            <a href="rules.html" class="cta-button" data-key="btn-rules">Правила сервера</a>
+            <a href="rp-mechanics.html" class="cta-button" data-key="btn-rp">RP Механіки</a>
+            <a href="economy.html" class="cta-button" data-key="btn-eco">Економіка</a>
         </div>
     </div>
 
@@ -295,7 +472,6 @@
         });
     }
     </script>
-
+<script src="script.js"></script>
 </body>
 </html>
-
