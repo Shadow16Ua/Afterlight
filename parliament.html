@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Форум Парламенту | AfterLight</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Russo+One&family=Roboto:wght@400;700&display=swap');
+        
+        body {
+            background-image: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url('Parlament.png');
+            background-attachment: fixed;
+            background-position: center;
+            background-size: cover;
+            background-color: #121212;
+            color: #e0e0e0;
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+        }
+
+        .container {
+            max-width: 900px;
+            width: 95%;
+            margin: 40px auto;
+            background: rgba(255, 255, 255, 0.03);
+            padding: 30px;
+            border-radius: 12px;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(240, 165, 0, 0.2);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+        }
+
+        h1 {
+            font-family: 'Russo One', sans-serif;
+            color: #f0a500;
+            text-align: center;
+            letter-spacing: 3px;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+        }
+
+        .decree-wall {
+            background: rgba(0,0,0,0.5);
+            border-radius: 8px;
+            padding: 20px;
+            min-height: 300px;
+            max-height: 800px;
+            overflow-y: auto;
+            margin-bottom: 20px;
+            border: 1px solid #333;
+        }
+
+        .message {
+            background: rgba(255, 255, 255, 0.03);
+            border-left: 4px solid #f0a500;
+            margin-bottom: 15px;
+            padding: 10px 15px !important;
+            text-align: left;
+            border-radius: 0 6px 6px 0;
+            white-space: pre-wrap;
+        }
+
+        .message b {
+            display: block;
+            color: #f0a500;
+            font-family: 'Russo One', sans-serif;
+            font-size: 0.8rem;
+            margin: 0 0 5px 0 !important;
+            line-height: 1.2;
+        }
+
+        .message p { margin: 0; color: #ccc; line-height: 1.4; }
+
+        .input-area { background: rgba(0,0,0,0.2); padding: 20px; border-radius: 10px; border: 1px solid rgba(240,165,0,0.1); }
+        
+        .parl-input, .parl-textarea {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(240, 165, 0, 0.3);
+            color: white;
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+            outline: none;
+        }
+
+        .parl-input { font-family: 'Russo One', sans-serif; color: #f0a500; }
+        .parl-textarea { resize: vertical; min-height: 100px; }
+
+        .send-btn {
+            background: #f0a500;
+            color: black;
+            border: none;
+            padding: 10px 25px;
+            font-family: 'Russo One', sans-serif;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: 0.3s;
+        }
+        .send-btn:hover { background: #fff; box-shadow: 0 0 10px #f0a500; }
+
+        .auth-btn {
+            background: none;
+            border: 1px dashed #f0a500;
+            color: #f0a500;
+            padding: 15px 30px;
+            cursor: pointer;
+            font-family: 'Russo One', sans-serif;
+            margin: 20px auto;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="nav-bar">
+        <a href="index.html"><img src="logo.png" alt="Logo" class="nav-logo"></a>
+        <a href="index.html" class="back-btn">← НА ГОЛОВНУ</a>
+    </nav>
+
+    <div class="container">
+        <h1>ФОРУМ ПАРЛАМЕНТУ</h1>
+
+        <div class="decree-wall" id="decreeWall">
+            <p style="text-align:center;">Завантаження дописів...</p>
+        </div>
+
+        <div id="authSection">
+            <button class="auth-btn" onclick="checkParlPass()">🔐 АВТОРИЗАЦІЯ ПОЛІТИКА</button>
+        </div>
+
+        <div id="inputSection" class="input-area" style="display: none;">
+            <input type="text" id="authorName" placeholder="Ваш нікнейм..." class="parl-input">
+            <textarea id="messageText" placeholder="Напишіть ваш допис тут..." class="parl-textarea"></textarea>
+            <div style="display: flex; justify-content: flex-end;">
+                <button class="send-btn" onclick="postMessage()">ОПУБЛІКУВАТИ</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLSdonsj01Se51h0f_vnAG_uniH2mY1KeIVQq7ax71H3Fi4KyzQ/formResponse";
+        const NICK_ID = "entry.426138291"; 
+        const MSG_ID = "entry.1992935995";
+        const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTUjPGqtjr-yX__6GsMy9cfwfoWj3rc_lLE7Hf0Jh5IYCBhANOqjKQnen_VP4q9nmoKEcbIQY-JSKmA/pub?gid=507092794&single=true&output=csv";
+
+        function checkParlPass() {
+            const pass = prompt("Введіть ключ доступу:");
+            if (pass === "AfterLight777") {
+                document.getElementById('authSection').style.display = 'none';
+                document.getElementById('inputSection').style.display = 'block';
+                sessionStorage.setItem('parl_auth', 'true');
+            } else if (pass !== null) {
+                alert("Невірний пароль!");
+            }
+        }
+
+        async function postMessage() {
+            const author = document.getElementById('authorName').value.trim();
+            const text = document.getElementById('messageText').value.trim();
+
+            if (!author || !text) {
+                alert("Заповніть усі поля!");
+                return;
+            }
+
+            const params = new URLSearchParams();
+            params.append(NICK_ID, author);
+            params.append(MSG_ID, text);
+
+            try {
+                await fetch(FORM_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: params.toString()
+                });
+
+                alert("Допис надіслано!");
+                document.getElementById('messageText').value = '';
+                // Даємо Google 2 секунди на оновлення таблиці перед перезавантаженням
+                setTimeout(() => { location.reload(); }, 2000);
+            } catch (e) {
+                alert("Помилка відправки!");
+            }
+        }
+
+        async function loadDecrees() {
+            const wall = document.getElementById('decreeWall');
+            try {
+                // Додаємо випадкове число, щоб уникнути кешування
+                const response = await fetch(CSV_URL + "&t=" + Math.random());
+                
+                if (!response.ok) throw new Error('Помилка мережі');
+                
+                const buffer = await response.arrayBuffer();
+                const decoder = new TextDecoder('utf-8'); // Явно вказуємо кодування для української мови
+                const data = decoder.decode(buffer);
+                
+                const rows = data.split(/\r?\n/).filter(row => row.trim() !== "").slice(1);
+                
+                if (rows.length === 0) {
+                    wall.innerHTML = '<p style="text-align:center;">На форумі поки порожньо.</p>';
+                    return;
+                }
+
+                wall.innerHTML = '';
+                rows.reverse().forEach(row => {
+                    // Розбиваємо рядок, враховуючи, що текст може бути в лапках
+                    const cols = row.match(/(".*?"|[^",\s]+)(?=\s*,|\s*$)/g);
+                    
+                    if (cols && cols.length >= 2) {
+                        const time = cols[0].replace(/^"|"$/g, '').trim();
+                        const name = cols[1].replace(/^"|"$/g, '').trim();
+                        const msg  = cols[2] ? cols[2].replace(/^"|"$/g, '').replace(/""/g, '"').trim() : "";
+
+                        wall.innerHTML += `
+                            <div class="message">
+                                <b>${name.toUpperCase()} | ${time}</b>
+                                <p>${msg}</p>
+                            </div>`;
+                    }
+                });
+            } catch (e) {
+                console.error("CSV Error:", e);
+                wall.innerHTML = '<p style="color:#f0a500; text-align:center;">Синхронізація з базою даних...<br>Зачекайте 10-20 секунд і оновіть сторінку.</p>';
+            }
+        }
+
+        window.onload = () => {
+            loadDecrees();
+            if (sessionStorage.getItem('parl_auth') === 'true') {
+                document.getElementById('authSection').style.display = 'none';
+                document.getElementById('inputSection').style.display = 'block';
+            }
+        };
+    </script>
+</body>
+</html>
