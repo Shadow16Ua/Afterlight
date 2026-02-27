@@ -147,80 +147,80 @@
     </div>
 
     <script>
-        const FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLSdonsj01Se51h0f_vnAG_uniH2mY1KeIVQq7ax71H3Fi4KyzQ/formResponse";
+        // === НАЛАШТУВАННЯ ===
+        const FORM_ID = "1FAIpQLSdonsj01Se51h0f_vnAG_uniH2mY1KeIVQq7ax71H3Fi4KyzQ"; 
         const NICK_ID = "entry.426138291"; 
-        const MSG_ID = "entry.1992935995";
+        const MSG_ID  = "entry.1992935995"; 
         const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTUjPGqtjr-yX__6GsMy9cfwfoWj3rc_lLE7Hf0Jh5IYCBhANOqjKQnen_VP4q9nmoKEcbIQY-JSKmA/pub?gid=507092794&single=true&output=csv";
-
+        
+        // 1. АВТОРИЗАЦІЯ (Тепер точно натиснеться)
         function checkParlPass() {
-            const pass = prompt("Введіть ключ доступу:");
+            console.log("Спроба авторизації...");
+            const pass = prompt("Введіть ключ доступу політика:");
+            
             if (pass === "AfterLight777") {
                 document.getElementById('authSection').style.display = 'none';
                 document.getElementById('inputSection').style.display = 'block';
                 sessionStorage.setItem('parl_auth', 'true');
+                alert("Доступ дозволено!");
             } else if (pass !== null) {
                 alert("Невірний пароль!");
             }
         }
-
+        
+        // 2. ВІДПРАВКА (Публікує все як 1 текст)
         async function postMessage() {
             const author = document.getElementById('authorName').value.trim();
             const text = document.getElementById('messageText').value.trim();
-
-            if (!author || !text) {
-                alert("Заповніть усі поля!");
-                return;
-            }
-
+        
+            if (!author || !text) return alert("Заповни всі поля!");
+        
+            const url = `https://docs.google.com/forms/d/e/${FORM_ID}/formResponse`;
             const params = new URLSearchParams();
             params.append(NICK_ID, author);
             params.append(MSG_ID, text);
-
+        
             try {
-                await fetch(FORM_URL, {
+                await fetch(url, {
                     method: 'POST',
                     mode: 'no-cors',
-                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                    body: params.toString()
+                    body: params
                 });
-
-                alert("Допис надіслано!");
+        
+                alert("Допис опубліковано!");
                 document.getElementById('messageText').value = '';
-                // Даємо Google 2 секунди на оновлення таблиці перед перезавантаженням
-                setTimeout(() => { location.reload(); }, 2000);
+                setTimeout(() => { location.reload(); }, 1500); 
             } catch (e) {
                 alert("Помилка відправки!");
             }
         }
-
+        
+        // 3. ЗАВАНТАЖЕННЯ (Бере УСЕ після нікнейму як 1 текст)
         async function loadDecrees() {
             const wall = document.getElementById('decreeWall');
             try {
                 const response = await fetch(CSV_URL + "&t=" + Date.now());
                 const data = await response.text();
                 
-                // Розбиваємо на рядки по справжньому кінцю рядка
+                // Розбиваємо на рядки
                 const rows = data.split(/\r?\n/).filter(r => r.trim().length > 0).slice(1);
                 
                 wall.innerHTML = '';
                 rows.reverse().forEach(row => {
-                    // Шукаємо позицію першої коми (після дати)
                     const firstComma = row.indexOf(',');
-                    // Шукаємо позицію другої коми (після нікнейму)
                     const secondComma = row.indexOf(',', firstComma + 1);
         
                     if (firstComma !== -1 && secondComma !== -1) {
                         const time = row.substring(0, firstComma).replace(/"/g, '').trim();
                         const name = row.substring(firstComma + 1, secondComma).replace(/"/g, '').trim();
                         
-                        // ЗАБИРАЄМО АБСОЛЮТНО ВСЕ, ЩО ЙДЕ ПІСЛЯ ДРУГОЇ КОМИ
+                        // ЗАБИРАЄМО АБСОЛЮТНО ВСЕ, ЩО ЙДЕ ПІСЛЯ НІКНЕЙМУ
                         let msg = row.substring(secondComma + 1).trim();
                         
-                        // Прибираємо лапки, які Google автоматично ліпить на початку і в кінці всього тексту
+                        // Чистимо лапки Google
                         if (msg.startsWith('"') && msg.endsWith('"')) {
                             msg = msg.substring(1, msg.length - 1);
                         }
-                        // Повертаємо подвійні лапки в нормальний вигляд
                         msg = msg.replace(/""/g, '"'); 
         
                         const msgBlock = document.createElement('div');
@@ -230,33 +230,25 @@
                     }
                 });
             } catch (e) {
-                console.error("Помилка бази:", e);
+                console.error("Помилка завантаження:", e);
             }
         }
         
-                wall.innerHTML = '';
-                messages.reverse().forEach(m => {
-                    const msgBlock = document.createElement('div');
-                    msgBlock.className = 'message';
-                    msgBlock.innerHTML = `<b>${m.name.toUpperCase()} | ${m.time}</b><p>${m.text}</p>`;
-                    wall.appendChild(msgBlock);
-                });
-            } catch (e) {
-                console.error("Помилка обробки тексту:", e);
-            }
-        }
-
+        // ПЕРЕВІРКА ПРИ ЗАВАНТАЖЕННІ
         window.onload = () => {
             loadDecrees();
             if (sessionStorage.getItem('parl_auth') === 'true') {
-                document.getElementById('authSection').style.display = 'none';
-                document.getElementById('inputSection').style.display = 'block';
+                const authSec = document.getElementById('authSection');
+                const inputSec = document.getElementById('inputSection');
+                if (authSec) authSec.style.display = 'none';
+                if (inputSec) inputSec.style.display = 'block';
             }
         };
     </script>
 </body>
 
 </html>
+
 
 
 
