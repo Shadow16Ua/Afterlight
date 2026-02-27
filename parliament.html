@@ -196,24 +196,29 @@
         async function loadDecrees() {
             const wall = document.getElementById('decreeWall');
             try {
-                const response = await fetch(CSV_URL + "&cache=" + Date.now());
+                const response = await fetch(CSV_URL + "&t=" + Date.now());
                 const data = await response.text();
                 
-                // Розбиваємо на рядки, ігноруючи порожні
+                // Розбиваємо на рядки, але зберігаємо цілісність
                 const rows = data.split(/\r?\n/).filter(r => r.trim().length > 0).slice(1);
                 
                 wall.innerHTML = '';
                 rows.reverse().forEach(row => {
-                    // Ця регулярка — магія, вона витягує текст, навіть якщо в ньому є коми
+                    // Використовуємо регулярку, яка шукає: 1. Час, 2. Нік, 3. ВСЕ ІНШЕ до кінця рядка
                     const cols = row.match(/(".*?"|[^",\s]+)(?=\s*,|\s*$)/g);
                     
                     if (cols && cols.length >= 2) {
                         const time = cols[0].replace(/^"|"$/g, '').trim();
                         const name = cols[1].replace(/^"|"$/g, '').trim();
-                        // Обробляємо текст: прибираємо зайві лапки Google
-                        let msg = cols[2] ? cols[2].replace(/^"|"$/g, '').replace(/""/g, '"').trim() : "";
+                        
+                        // ФІКС: Беремо всі елементи масиву, починаючи з 3-го, і з'єднуємо їх назад
+                        // Це не дасть тексту обрізатися на першій же комі
+                        let msgParts = [];
+                        for(let i = 2; i < cols.length; i++) {
+                            msgParts.push(cols[i]);
+                        }
+                        let msg = msgParts.join(', ').replace(/^"|"$/g, '').replace(/""/g, '"').trim();
         
-                        // Якщо текст обрізався, це могло статись через символ \n в CSV
                         const msgBlock = document.createElement('div');
                         msgBlock.className = 'message';
                         msgBlock.innerHTML = `<b>${name.toUpperCase()} | ${time}</b><p>${msg}</p>`;
@@ -221,7 +226,7 @@
                     }
                 });
             } catch (e) {
-                console.error(e);
+                console.error("Помилка відображення:", e);
             }
         }
 
@@ -236,3 +241,4 @@
 </body>
 
 </html>
+
