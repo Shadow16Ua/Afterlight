@@ -195,33 +195,63 @@
             }
         }
         
-        // 3. ЗАВАНТАЖЕННЯ (Бере УСЕ після нікнейму як 1 текст)
+       // Допоміжна функція для правильного читання CSV (враховує лапки та переноси рядків)
+        function parseCSV(text) {
+            const rows = [];
+            let currentRow = [];
+            let currentField = '';
+            let inQuotes = false;
+        
+            for (let i = 0; i < text.length; i++) {
+                const char = text[i];
+                const nextChar = text[i + 1];
+        
+                if (char === '"' && inQuotes && nextChar === '"') {
+                    currentField += '"';
+                    i++; // Пропускаємо подвійну лапку
+                } else if (char === '"') {
+                    inQuotes = !inQuotes;
+                } else if (char === ',' && !inQuotes) {
+                    currentRow.push(currentField);
+                    currentField = '';
+                } else if ((char === '\r' || char === '\n') && !inQuotes) {
+                    if (currentRow.length > 0 || currentField !== '') {
+                        currentRow.push(currentField);
+                        rows.push(currentRow);
+                        currentRow = [];
+                        currentField = '';
+                    }
+                    if (char === '\r' && nextChar === '\n') i++; // Пропускаємо \n після \r
+                } else {
+                    currentField += char;
+                }
+            }
+            if (currentRow.length > 0 || currentField !== '') {
+                currentRow.push(currentField);
+                rows.push(currentRow);
+            }
+            return rows;
+        }
+
+// Оновлена функція завантаження
         async function loadDecrees() {
             const wall = document.getElementById('decreeWall');
             try {
                 const response = await fetch(CSV_URL + "&t=" + Date.now());
                 const data = await response.text();
                 
-                // Розбиваємо на рядки
-                const rows = data.split(/\r?\n/).filter(r => r.trim().length > 0).slice(1);
-                
-                wall.innerHTML = '';
-                rows.reverse().forEach(row => {
-                    const firstComma = row.indexOf(',');
-                    const secondComma = row.indexOf(',', firstComma + 1);
+                // Використовуємо нову функцію замість простого split()
+                const allRows = parseCSV(data);
+                const rows = allRows.slice(1); // Видаляємо заголовок (Timestamp, Nick, Message)
         
-                    if (firstComma !== -1 && secondComma !== -1) {
-                        const time = row.substring(0, firstComma).replace(/"/g, '').trim();
-                        const name = row.substring(firstComma + 1, secondComma).replace(/"/g, '').trim();
-                        
-                        // ЗАБИРАЄМО АБСОЛЮТНО ВСЕ, ЩО ЙДЕ ПІСЛЯ НІКНЕЙМУ
-                        let msg = row.substring(secondComma + 1).trim();
-                        
-                        // Чистимо лапки Google
-                        if (msg.startsWith('"') && msg.endsWith('"')) {
-                            msg = msg.substring(1, msg.length - 1);
-                        }
-                        msg = msg.replace(/""/g, '"'); 
+                wall.innerHTML = '';
+                
+                // Виводимо в зворотному порядку (нові зверху)
+                rows.reverse().forEach(row => {
+                    if (row.length >= 3) {
+                        const time = row[0].trim();
+                        const name = row[1].trim();
+                        const msg = row[2].trim();
         
                         const msgBlock = document.createElement('div');
                         msgBlock.className = 'message';
@@ -231,6 +261,7 @@
                 });
             } catch (e) {
                 console.error("Помилка завантаження:", e);
+                wall.innerHTML = '<p style="text-align:center; color: red;">Помилка завантаження даних.</p>';
             }
         }
         
@@ -248,6 +279,7 @@
 </body>
 
 </html>
+
 
 
 
