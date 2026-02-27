@@ -199,36 +199,32 @@
                 const response = await fetch(CSV_URL + "&t=" + Date.now());
                 const data = await response.text();
                 
-                // Розбиваємо на рядки
-                const rows = data.split(/\r?\n/).filter(r => r.trim().length > 0).slice(1);
+                // Використовуємо регулярку, яка шукає повні CSV-рядки, 
+                // навіть якщо всередині повідомлення є переноси рядків (Enter)
+                const pattern = /(".*?"|[^",\r\n]+)(?=\s*,|\s*(\r?\n|$))/g;
+                const allMatches = data.match(pattern);
                 
+                if (!allMatches) return;
+        
+                // Групуємо результати по 3 (Дата, Нік, Повідомлення)
+                const messages = [];
+                for (let i = 3; i < allMatches.length; i += 3) {
+                    messages.push({
+                        time: allMatches[i].replace(/^"|"$/g, '').trim(),
+                        name: allMatches[i+1].replace(/^"|"$/g, '').trim(),
+                        text: allMatches[i+2] ? allMatches[i+2].replace(/^"|"$/g, '').replace(/""/g, '"').trim() : ""
+                    });
+                }
+        
                 wall.innerHTML = '';
-                rows.reverse().forEach(row => {
-                    // Знаходимо першу кому (після дати)
-                    const firstComma = row.indexOf(',');
-                    // Знаходимо другу кому (після нікнейму)
-                    const secondComma = row.indexOf(',', firstComma + 1);
-        
-                    if (firstComma !== -1 && secondComma !== -1) {
-                        const time = row.substring(0, firstComma).replace(/"/g, '').trim();
-                        const name = row.substring(firstComma + 1, secondComma).replace(/"/g, '').trim();
-                        // ЗАБИРАЄМО ВСЕ ІНШЕ ЯК ТЕКСТ
-                        let msg = row.substring(secondComma + 1).trim();
-                        
-                        // Очищаємо текст від зайвих лапок Google
-                        if (msg.startsWith('"') && msg.endsWith('"')) {
-                            msg = msg.substring(1, msg.length - 1);
-                        }
-                        msg = msg.replace(/""/g, '"'); 
-        
-                        const msgBlock = document.createElement('div');
-                        msgBlock.className = 'message';
-                        msgBlock.innerHTML = `<b>${name.toUpperCase()} | ${time}</b><p>${msg}</p>`;
-                        wall.appendChild(msgBlock);
-                    }
+                messages.reverse().forEach(m => {
+                    const msgBlock = document.createElement('div');
+                    msgBlock.className = 'message';
+                    msgBlock.innerHTML = `<b>${m.name.toUpperCase()} | ${m.time}</b><p>${m.text}</p>`;
+                    wall.appendChild(msgBlock);
                 });
             } catch (e) {
-                console.error("Помилка:", e);
+                console.error("Помилка обробки тексту:", e);
             }
         }
 
@@ -243,6 +239,7 @@
 </body>
 
 </html>
+
 
 
 
