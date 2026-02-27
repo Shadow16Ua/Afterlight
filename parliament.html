@@ -199,22 +199,40 @@
                 const response = await fetch(CSV_URL + "&t=" + Date.now());
                 const data = await response.text();
                 
-                // Використовуємо регулярку, яка шукає повні CSV-рядки, 
-                // навіть якщо всередині повідомлення є переноси рядків (Enter)
-                const pattern = /(".*?"|[^",\r\n]+)(?=\s*,|\s*(\r?\n|$))/g;
-                const allMatches = data.match(pattern);
+                // Розбиваємо на рядки по справжньому кінцю рядка
+                const rows = data.split(/\r?\n/).filter(r => r.trim().length > 0).slice(1);
                 
-                if (!allMatches) return;
+                wall.innerHTML = '';
+                rows.reverse().forEach(row => {
+                    // Шукаємо позицію першої коми (після дати)
+                    const firstComma = row.indexOf(',');
+                    // Шукаємо позицію другої коми (після нікнейму)
+                    const secondComma = row.indexOf(',', firstComma + 1);
         
-                // Групуємо результати по 3 (Дата, Нік, Повідомлення)
-                const messages = [];
-                for (let i = 3; i < allMatches.length; i += 3) {
-                    messages.push({
-                        time: allMatches[i].replace(/^"|"$/g, '').trim(),
-                        name: allMatches[i+1].replace(/^"|"$/g, '').trim(),
-                        text: allMatches[i+2] ? allMatches[i+2].replace(/^"|"$/g, '').replace(/""/g, '"').trim() : ""
-                    });
-                }
+                    if (firstComma !== -1 && secondComma !== -1) {
+                        const time = row.substring(0, firstComma).replace(/"/g, '').trim();
+                        const name = row.substring(firstComma + 1, secondComma).replace(/"/g, '').trim();
+                        
+                        // ЗАБИРАЄМО АБСОЛЮТНО ВСЕ, ЩО ЙДЕ ПІСЛЯ ДРУГОЇ КОМИ
+                        let msg = row.substring(secondComma + 1).trim();
+                        
+                        // Прибираємо лапки, які Google автоматично ліпить на початку і в кінці всього тексту
+                        if (msg.startsWith('"') && msg.endsWith('"')) {
+                            msg = msg.substring(1, msg.length - 1);
+                        }
+                        // Повертаємо подвійні лапки в нормальний вигляд
+                        msg = msg.replace(/""/g, '"'); 
+        
+                        const msgBlock = document.createElement('div');
+                        msgBlock.className = 'message';
+                        msgBlock.innerHTML = `<b>${name.toUpperCase()} | ${time}</b><p>${msg}</p>`;
+                        wall.appendChild(msgBlock);
+                    }
+                });
+            } catch (e) {
+                console.error("Помилка бази:", e);
+            }
+        }
         
                 wall.innerHTML = '';
                 messages.reverse().forEach(m => {
@@ -239,6 +257,7 @@
 </body>
 
 </html>
+
 
 
 
