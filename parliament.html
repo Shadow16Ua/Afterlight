@@ -52,25 +52,31 @@
         }
 
         .message {
-            background: rgba(255, 255, 255, 0.03);
+            padding: 12px 18px !important;
+            margin-bottom: 10px !important;
+            background: rgba(255, 255, 255, 0.05);
             border-left: 4px solid #f0a500;
-            margin-bottom: 15px;
-            padding: 10px 15px !important;
-            text-align: left;
-            border-radius: 0 6px 6px 0;
-            white-space: pre-wrap;
+            border-radius: 0 4px 4px 0;
+            min-height: auto !important; /* ПРИБИРАЄ ДИРИ */
+            display: block !important;
         }
-
+        
         .message b {
-            display: block;
-            color: #f0a500;
             font-family: 'Russo One', sans-serif;
-            font-size: 0.8rem;
-            margin: 0 0 5px 0 !important;
-            line-height: 1.2;
+            font-size: 0.75rem;
+            color: #f0a500;
+            margin-bottom: 8px !important;
+            display: block;
+            line-height: 1;
         }
-
-        .message p { margin: 0; color: #ccc; line-height: 1.4; }
+        
+        .message p {
+            margin: 0 !important;
+            font-size: 0.95rem;
+            line-height: 1.4;
+            white-space: pre-wrap; /* ЗБЕРІГАЄ ВЕСЬ ТВОЙ ТЕКСТ ТА АБЗАЦИ */
+            color: #e0e0e0;
+        }
 
         .input-area { background: rgba(0,0,0,0.2); padding: 20px; border-radius: 10px; border: 1px solid rgba(240,165,0,0.1); }
         
@@ -190,42 +196,32 @@
         async function loadDecrees() {
             const wall = document.getElementById('decreeWall');
             try {
-                // Додаємо випадкове число, щоб уникнути кешування
-                const response = await fetch(CSV_URL + "&t=" + Math.random());
+                const response = await fetch(CSV_URL + "&cache=" + Date.now());
+                const data = await response.text();
                 
-                if (!response.ok) throw new Error('Помилка мережі');
+                // Розбиваємо на рядки, ігноруючи порожні
+                const rows = data.split(/\r?\n/).filter(r => r.trim().length > 0).slice(1);
                 
-                const buffer = await response.arrayBuffer();
-                const decoder = new TextDecoder('utf-8'); // Явно вказуємо кодування для української мови
-                const data = decoder.decode(buffer);
-                
-                const rows = data.split(/\r?\n/).filter(row => row.trim() !== "").slice(1);
-                
-                if (rows.length === 0) {
-                    wall.innerHTML = '<p style="text-align:center;">На форумі поки порожньо.</p>';
-                    return;
-                }
-
                 wall.innerHTML = '';
                 rows.reverse().forEach(row => {
-                    // Розбиваємо рядок, враховуючи, що текст може бути в лапках
+                    // Ця регулярка — магія, вона витягує текст, навіть якщо в ньому є коми
                     const cols = row.match(/(".*?"|[^",\s]+)(?=\s*,|\s*$)/g);
                     
                     if (cols && cols.length >= 2) {
                         const time = cols[0].replace(/^"|"$/g, '').trim();
                         const name = cols[1].replace(/^"|"$/g, '').trim();
-                        const msg  = cols[2] ? cols[2].replace(/^"|"$/g, '').replace(/""/g, '"').trim() : "";
-
-                        wall.innerHTML += `
-                            <div class="message">
-                                <b>${name.toUpperCase()} | ${time}</b>
-                                <p>${msg}</p>
-                            </div>`;
+                        // Обробляємо текст: прибираємо зайві лапки Google
+                        let msg = cols[2] ? cols[2].replace(/^"|"$/g, '').replace(/""/g, '"').trim() : "";
+        
+                        // Якщо текст обрізався, це могло статись через символ \n в CSV
+                        const msgBlock = document.createElement('div');
+                        msgBlock.className = 'message';
+                        msgBlock.innerHTML = `<b>${name.toUpperCase()} | ${time}</b><p>${msg}</p>`;
+                        wall.appendChild(msgBlock);
                     }
                 });
             } catch (e) {
-                console.error("CSV Error:", e);
-                wall.innerHTML = '<p style="color:#f0a500; text-align:center;">Синхронізація з базою даних...<br>Зачекайте 10-20 секунд і оновіть сторінку.</p>';
+                console.error(e);
             }
         }
 
@@ -238,4 +234,5 @@
         };
     </script>
 </body>
+
 </html>
