@@ -182,7 +182,7 @@
             if (!author || !text) return alert("Заповни всі поля!");
             if (!pass) return alert("Пароль обов'язковий!");
 
-            const url = `https://docs.google.com/forms/d/e/1Jsh9Jzm4NzAR_MTBd01ktjvgzkgQSyXWo6GfDGjM7GM/formResponse`;
+            const url = `https://docs.google.com/forms/d/e/${FORM_ID}/formResponse`;
             const params = new URLSearchParams();
             
             params.append(NICK_ID, author);
@@ -288,6 +288,7 @@
 </body>
 
 </html>
+
 
 
 
