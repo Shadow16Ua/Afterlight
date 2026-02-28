@@ -141,7 +141,7 @@
         </div>
 
         <div id="authSection">
-            <!-- <button class="auth-btn" onclick="checkParlPass()">🔐 АВТОРИЗАЦІЯ ПОЛІТИКА</button> -->
+            <button class="auth-btn" onclick="checkParlPass()">🔐 АВТОРИЗАЦІЯ ПОЛІТИКА</button>
         </div>
 
         <div id="inputSection" class="input-area" style="display: none;">
@@ -155,50 +155,52 @@
 
     <script>
         // === НАЛАШТУВАННЯ ===
-        const FORM_ID = "1FAIpQLSdonsj01Se51h0f_vnAG_uniH2mY1KeIVQq7ax71H3Fi4KyzQ"; 
+        const FORM_ID = "https://docs.google.com/forms/d/e/1FAIpQLSdonsj01Se51h0f_vnAG_uniH2mY1KeIVQq7ax71H3Fi4KyzQ/viewform?usp=dialog"; 
         const NICK_ID = "entry.426138291"; 
         const MSG_ID  = "entry.1992935995"; 
         const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTUjPGqtjr-yX__6GsMy9cfwfoWj3rc_lLE7Hf0Jh5IYCBhANOqjKQnen_VP4q9nmoKEcbIQY-JSKmA/pub?gid=507092794&single=true&output=csv";
-        
-        // 1. АВТОРИЗАЦІЯ (Тепер точно натиснеться)
+
+        // 1. ДОДАЙ ID ПОЛЯ ПАРОЛЯ (візьми його з попередньо заповненого посилання твоєї форми)
+        const PASS_FIELD_ID = "entry.538990333"; // ЗАМІНИ НА СВІЙ ID
+
+        // 2. ФУНКЦІЯ АВТОРИЗАЦІЇ (тепер просто показує форму)
         function checkParlPass() {
-            console.log("Спроба авторизації...");
-            const pass = prompt("Введіть ключ доступу політика:");
-            
-            if (pass === "Politic24763") {
-                document.getElementById('authSection').style.display = 'none';
-                document.getElementById('inputSection').style.display = 'block';
-                sessionStorage.setItem('parl_auth', 'true');
-                alert("Доступ дозволено!");
-            } else if (pass !== null) {
-                alert("Невірний пароль!");
-            }
+            // Ми прибрали перевірку пароля звідси, щоб його не було в коді
+            document.getElementById('authSection').style.display = 'none';
+            document.getElementById('inputSection').style.display = 'block';
+            console.log("Доступ до полів відкрито. Пароль буде запитано при публікації.");
         }
-        
-        // 2. ВІДПРАВКА (Публікує все як 1 текст)
+
+        // 3. ФУНКЦІЯ ВІДПРАВКИ (запитує пароль тут)
         async function postMessage() {
             const author = document.getElementById('authorName').value.trim();
             const text = document.getElementById('messageText').value.trim();
-        
+            
+            // ОСЬ ТУТ ВІКНО ПАРОЛЯ
+            const pass = prompt("Введіть секретний ключ для підтвердження публікації:");
+
             if (!author || !text) return alert("Заповни всі поля!");
-        
-            const url = `https://docs.google.com/forms/d/e/${FORM_ID}/formResponse`;
+            if (!pass) return alert("Пароль обов'язковий!");
+
+            const url = `https://docs.google.com/forms/d/e/1Jsh9Jzm4NzAR_MTBd01ktjvgzkgQSyXWo6GfDGjM7GM/formResponse`;
             const params = new URLSearchParams();
+            
             params.append(NICK_ID, author);
             params.append(MSG_ID, text);
-        
+            params.append(PASS_FIELD_ID, pass); // ВІДПРАВЛЯЄМО ПАРОЛЬ У GOOGLE
+
             try {
                 await fetch(url, {
                     method: 'POST',
                     mode: 'no-cors',
                     body: params
                 });
-        
-                alert("Допис опубліковано!");
+
+                alert("Запит надіслано! Якщо пароль вірний, допис з'явиться в списку за 10-20 секунд.");
                 document.getElementById('messageText').value = '';
-                setTimeout(() => { location.reload(); }, 1500); 
+                setTimeout(() => { location.reload(); }, 2000); 
             } catch (e) {
-                alert("Помилка відправки!");
+                alert("Помилка зв'язку з сервером.");
             }
         }
         
@@ -286,7 +288,6 @@
 </body>
 
 </html>
-
 
 
 
