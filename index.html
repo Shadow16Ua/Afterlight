@@ -356,6 +356,14 @@
             border-color: var(--accent-brass) !important;
             color: var(--accent-brass) !important;
         }
+
+		.bottom-buttons {
+            display: flex;
+            justify-content: center; /* Центруємо їх */
+            gap: 15px;               /* Відстань між ними */
+            flex-basis: 100%;       /* Змушуємо їх впасти на новий рядок під основні кнопки */
+            margin-top: 10px;        /* Відступ від верхніх кнопок */
+        }
     </style>
 </head>
 <body>
@@ -434,8 +442,10 @@
             <a href="rules.html" class="cta-button" data-key="btn-rules">Правила сервера</a>
             <a href="rp-mechanics.html" class="cta-button" data-key="btn-rp">RP Механіки</a>
             <a href="economy.html" class="cta-button" data-key="btn-eco">Економіка</a>
-            <a href="parliament.html" class="cta-button forum-btn">🏛️ ФОРУМ ПАРЛАМЕНТУ</a>
-            <a href="news.html" class="cta-button forum-btn">Новини</a>
+            <div class="bottom-buttons">
+                <a href="parliament.html" class="cta-button forum-btn">🏛️ ФОРУМ ПАРЛАМЕНТУ</a>
+                <a href="news.html" class="cta-button forum-btn">Новини</a>
+            </div>
         </div>
     </div>
 
@@ -492,6 +502,7 @@
 <script src="script.js"></script>
 </body>
 </html>
+
 
 
 
