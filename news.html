@@ -2,6 +2,7 @@
 <html lang="uk">
 <head>
     <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="favicon.png">
     <title>Новини | AfterLight</title>
     <link rel="stylesheet" href="style.css">
     <style>
@@ -83,35 +84,14 @@
             white-space: pre-wrap;
             font-size: 1.05rem;
         }
-
-        .back-nav {
-            margin-bottom: 30px;
-            width: 100%;
-            max-width: 800px;
-        }
-
-        .back-link {
-            color: var(--accent-brass);
-            text-decoration: none;
-            font-family: 'Russo One', sans-serif;
-            font-size: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            transition: 0.3s;
-        }
-
-        .back-link:hover {
-            color: #fff;
-            transform: translateX(-5px);
-        }
     </style>
 </head>
 <body>
 
-    <div class="back-nav">
-        <a href="index.html" class="back-link">❮ ПОВЕРНУТИСЬ НА ГОЛОВНУ</a>
-    </div>
+    <nav class="nav-bar">
+        <a href="index.html"><img src="logo.png" alt="Logo" class="nav-logo"></a>
+        <a href="index.html" class="back-btn">← НА ГОЛОВНУ</a>
+    </nav>
 
     <h1>Останні новини</h1>
 
@@ -159,4 +139,5 @@
         renderNews();
     </script>
 </body>
+
 </html>
