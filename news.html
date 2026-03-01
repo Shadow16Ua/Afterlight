@@ -2,158 +2,87 @@
 <html lang="uk">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/png" href="favicon.png">
-    <title>Новини | AfterLight</title>
+    <title>Новини | AfterLight S1</title>
     <link rel="stylesheet" href="style.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Russo+One&family=Roboto:wght@400;700&display=swap');
 
-        :root {
-            --accent-brass: #f0a500;
-            --accent-copper: #c87533;
-            --panel-bg: rgba(20, 20, 20, 0.9);
+        /* Скидання відступів для рівного відображення */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
 
         body {
-            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('Parlament.png') fixed center/cover;
-            color: #e0e0e0;
+            background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('Parlament.png');
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            color: #fff;
             font-family: 'Roboto', sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 40px 20px;
+            line-height: 1.6;
+        }
+        /* КОНТЕЙНЕР НОВИН */
+        .container {
+            max-width: 1100px;
+            width: 90%;
+            margin: 40px auto;
+            background: var(--panel-bg);
+            padding: 40px;
+            border-radius: 15px;
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(240, 165, 0, 0.3);
         }
 
         h1 {
             font-family: 'Russo One', sans-serif;
             color: var(--accent-brass);
-            font-size: clamp(2rem, 8vw, 3.5rem);
-            text-transform: uppercase;
-            margin-bottom: 40px;
-            text-shadow: 3px 3px 0px #000;
+            text-align: center;
+            font-size: 2.8rem;
+            margin-bottom: 10px;
         }
 
-        .news-container {
-            max-width: 800px;
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            gap: 30px;
+        .subtitle {
+            text-align: center;
+            color: var(--accent-copper);
+            margin-bottom: 40px;
+            font-weight: bold;
+            text-transform: uppercase;
         }
 
         .news-card {
-            background: var(--panel-bg);
-            border-left: 5px solid var(--accent-brass);
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.6);
-            border: 1px solid rgba(240, 165, 0, 0.1);
-        }
-
-        .news-img {
-            width: 100%;
-            max-height: 400px;
-            object-fit: cover;
-            border-bottom: 2px solid var(--accent-copper);
-        }
-
-        .news-content {
+            background: rgba(20, 20, 20, 0.6);
             padding: 30px;
+            margin-bottom: 30px;
+            border-radius: 8px;
+            text-align: left;
+            border-left: 4px solid var(--accent-brass);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-left: 4px solid var(--accent-brass);
         }
 
         .news-date {
             color: var(--accent-copper);
             font-size: 0.9rem;
             font-weight: bold;
-            margin-bottom: 12px;
             display: block;
-            font-family: 'Russo One', sans-serif;
-        }
-
-        .news-title {
-            font-family: 'Russo One', sans-serif;
-            font-size: 1.8rem;
-            color: var(--accent-brass);
-            margin-bottom: 20px;
-            line-height: 1.2;
+            margin-bottom: 10px;
         }
 
         .news-text {
-            line-height: 1.7;
-            color: #d0d0d0;
-            white-space: pre-wrap;
-            font-size: 1.05rem;
+            white-space: pre-wrap; /* Щоб читалися абзаци */
+            color: #ddd;
         }
 
-        @media (max-width: 600px) 
-        {
-            .nav-bar { padding: 10px 20px; flex-direction: column; gap: 15px; }
-            .container { padding: 20px; }
-            h1 { font-size: 1.8rem; }
+        @media (max-width: 600px) {
+            .nav-bar { padding: 0 20px; }
+            .nav-logo { height: 35px; }
+            h1 { font-size: 2rem; }
         }
-
-        .back-btn {
-    	position: relative;
-    	color: var(--accent-brass) !important;
-    	text-decoration: none;
-    	font-weight: bold;
-    	font-family: 'Russo One', sans-serif;
-    	border: 2px solid var(--accent-brass) !important;
-    	padding: 10px 25px;
-    	border-radius: 4px;
-    	transition: all 0.4s ease-in-out;		
-    	white-space: nowrap;		
-    	display: inline-block;				
-    	z-index: 1;				
-    
-    	/* Вимикаємо фон повністю у звичайному стані */
-    	background-image: none !important; 
-    	background-color: transparent !important;
-    }
-    
-    .back-btn:hover {
-    	color: #c87533 !important;
-    	border-color: #c87533 !important;
-    			
-    	/* Вмикаємо градієнт ТІЛЬКИ при наведенні */
-    	background-image: linear-gradient(120deg, 
-    		transparent 0%, 
-    		rgba(240, 165, 0, 0.4) 50%, 
-    		transparent 100%) !important;
-    	background-size: 200% 100% !important;
-    	background-color: rgba(240, 165, 0, 0.1) !important;
-    			
-    	transform: scale(1.05);
-    	box-shadow: 0 0 15px rgba(240, 165, 0, 0.3);
-    	animation: lightFlow 3s infinite linear;
-    }
-    
-    @keyframes lightFlow {
-    	0% { background-position: 200% 0; }
-    	100% { background-position: -200% 0; }
-    }
-    
-    .nav-side { flex: 1; display: flex; align-items: center; }
-    .nav-logo { 
-    	position: absolute;
-    	top: 28.5px;
-    	left: 20px;
-    	width: 150px; /* Розмір логотипу */
-    	height: auto;
-    	z-index: 1000;
-    	transition: transform 0.3s ease;
-    }
-    .nav-logo:hover { filter: drop-shadow(0 0 8px var(--accent-brass)); }
-    
-    /* Навігація */
-    .nav-bar {
-        width: 100%;
-        padding: 20px;
-        background: rgba(0,0,0,0.5);
-        display: flex;
-        justify-content: center;
-        border-bottom: 2px solid var(--accent-copper);
-    }
     </style>
 </head>
 <body>
@@ -163,52 +92,24 @@
         <a href="index.html" class="back-btn">← НА ГОЛОВНУ</a>
     </nav>
 
-    <h1>Останні новини</h1>
+    <div class="container">
+        <h1>НОВИНИ СЕРВЕРА</h1>
+        <div class="subtitle">Останні події AfterLight S1</div>
 
-    <div class="news-container" id="newsFeed">
-        </div>
-
-    <script>
-        // === ТУТ ТИ ВПИСУЄШ НОВИНИ ВРУЧНУ ===
-        const myNews = [
-    {
-        date: "01.03.2026",
-        title: "📰 Терміновий репортаж із сервера",
-        // Використовуємо зворотні лапки ` замість звичайних "
-        text: `У сільському поселенні відбулися кадрові зміни: Зіахара призначено головою окупаційної адміністрації до проведення виборів нового очільника. Відповідне оголошення з’явилося сьогодні о 15:13 від представника сторони під ніком vskiy. 
-                
+        <div id="news-feed">
+            <div class="news-card">
+                <span class="news-date">01.03.2026</span>
+                <h2>📰 Терміновий репортаж</h2>
+                <p class="news-text">У сільському поселенні відбулися кадрові зміни: Зіахара призначено головою окупаційної адміністрації до проведення виборів нового очільника. Відповідне оголошення з’явилося сьогодні о 15:13 від представника сторони під ніком vskiy. 
+            
 За офіційною заявою, новопризначений керівник тимчасово виконуватиме обов’язки голови населеного пункту до моменту організації та проведення виборчого процесу. Паралельно вже стартували роботи зі створення базової індустрії та розбудови інфраструктури.
 
 Водночас ситуація залишається напруженою: військові унії продовжують нести службу на території поселення. За їхніми словами, це необхідно для забезпечення порядку та стабілізації обстановки на сервері після нещодавніх подій.
 
-Аналітики зазначають, що ключовим фактором найближчих днів стане рівень підтримки нової адміністрації серед гравців, а також те, чи вдасться уникнути подальшої ескалації конфлікту.`,
-                
-            },
-        ];
+Аналітики зазначають, що ключовим фактором найближчих днів стане рівень підтримки нової адміністрації серед гравців, а також те, чи вдасться уникнути подальшої ескалації конфлікту.</p>
+            </div>
+        </div>
+    </div>
 
-        function renderNews() {
-            const feed = document.getElementById('newsFeed');
-            feed.innerHTML = '';
-
-            myNews.forEach(item => {
-                const card = document.createElement('div');
-                card.className = 'news-card';
-                card.innerHTML = `
-                    ${item.img ? `<img src="${item.img}" class="news-img" alt="news">` : ''}
-                    <div class="news-content">
-                        <span class="news-date">${item.date}</span>
-                        <h2 class="news-title">${item.title}</h2>
-                        <p class="news-text">${item.text}</p>
-                    </div>
-                `;
-                feed.appendChild(card);
-            });
-        }
-
-        // Запуск відображення
-        renderNews();
-    </script>
 </body>
-
 </html>
-
