@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Новини | AfterLight</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Russo+One&family=Roboto:wght@400;700&display=swap');
+
+        :root {
+            --accent-brass: #f0a500;
+            --accent-copper: #c87533;
+            --panel-bg: rgba(20, 20, 20, 0.9);
+        }
+
+        body {
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('Parlament.png') fixed center/cover;
+            color: #e0e0e0;
+            font-family: 'Roboto', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 20px;
+        }
+
+        h1 {
+            font-family: 'Russo One', sans-serif;
+            color: var(--accent-brass);
+            font-size: clamp(2rem, 8vw, 3.5rem);
+            text-transform: uppercase;
+            margin-bottom: 40px;
+            text-shadow: 3px 3px 0px #000;
+        }
+
+        .news-container {
+            max-width: 800px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .news-card {
+            background: var(--panel-bg);
+            border-left: 5px solid var(--accent-brass);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+            border: 1px solid rgba(240, 165, 0, 0.1);
+        }
+
+        .news-img {
+            width: 100%;
+            max-height: 400px;
+            object-fit: cover;
+            border-bottom: 2px solid var(--accent-copper);
+        }
+
+        .news-content {
+            padding: 30px;
+        }
+
+        .news-date {
+            color: var(--accent-copper);
+            font-size: 0.9rem;
+            font-weight: bold;
+            margin-bottom: 12px;
+            display: block;
+            font-family: 'Russo One', sans-serif;
+        }
+
+        .news-title {
+            font-family: 'Russo One', sans-serif;
+            font-size: 1.8rem;
+            color: var(--accent-brass);
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .news-text {
+            line-height: 1.7;
+            color: #d0d0d0;
+            white-space: pre-wrap;
+            font-size: 1.05rem;
+        }
+
+        .back-nav {
+            margin-bottom: 30px;
+            width: 100%;
+            max-width: 800px;
+        }
+
+        .back-link {
+            color: var(--accent-brass);
+            text-decoration: none;
+            font-family: 'Russo One', sans-serif;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: 0.3s;
+        }
+
+        .back-link:hover {
+            color: #fff;
+            transform: translateX(-5px);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="back-nav">
+        <a href="index.html" class="back-link">❮ ПОВЕРНУТИСЬ НА ГОЛОВНУ</a>
+    </div>
+
+    <h1>Останні новини</h1>
+
+    <div class="news-container" id="newsFeed">
+        </div>
+
+    <script>
+        // === ТУТ ТИ ВПИСУЄШ НОВИНИ ВРУЧНУ ===
+        const myNews = [
+    {
+        date: "01.03.2026",
+        title: "📰 Терміновий репортаж із сервера",
+        // Використовуємо зворотні лапки ` замість звичайних "
+        text: `У сільському поселенні відбулися кадрові зміни: Зіахара призначено головою окупаційної адміністрації до проведення виборів нового очільника. Відповідне оголошення з’явилося сьогодні о 15:13 від представника сторони під ніком vskiy. 
+                
+За офіційною заявою, новопризначений керівник тимчасово виконуватиме обов’язки голови населеного пункту до моменту організації та проведення виборчого процесу. Паралельно вже стартували роботи зі створення базової індустрії та розбудови інфраструктури.
+
+Водночас ситуація залишається напруженою: військові унії продовжують нести службу на території поселення. За їхніми словами, це необхідно для забезпечення порядку та стабілізації обстановки на сервері після нещодавніх подій.
+
+Аналітики зазначають, що ключовим фактором найближчих днів стане рівень підтримки нової адміністрації серед гравців, а також те, чи вдасться уникнути подальшої ескалації конфлікту.`,
+                
+            },
+        ];
+
+        function renderNews() {
+            const feed = document.getElementById('newsFeed');
+            feed.innerHTML = '';
+
+            myNews.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'news-card';
+                card.innerHTML = `
+                    ${item.img ? `<img src="${item.img}" class="news-img" alt="news">` : ''}
+                    <div class="news-content">
+                        <span class="news-date">${item.date}</span>
+                        <h2 class="news-title">${item.title}</h2>
+                        <p class="news-text">${item.text}</p>
+                    </div>
+                `;
+                feed.appendChild(card);
+            });
+        }
+
+        // Запуск відображення
+        renderNews();
+    </script>
+</body>
+</html>
