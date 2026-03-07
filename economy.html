@@ -198,49 +198,58 @@
 						inset 0 0 15px rgba(240, 165, 0, 0.3);
 		}
 		.market-analysis {
-		    margin-top: 40px;
-		    padding-top: 30px;
-		    border-top: 1px solid rgba(255, 255, 255, 0.1);
+		    margin-top: 50px;
+		    width: 100%;
+		    display: flex;
+		    flex-direction: column;
+		    align-items: center; /* Центрує заголовок і картки по горизонталі */
 		    text-align: center;
 		}
 		
 		.market-analysis h2 {
-		    font-size: 1.5rem;
-		    margin-bottom: 25px;
-		    text-align: center;
-		}
-		
-		.analysis-grid {
-		    display: grid;
-		    grid-template-columns: 1fr 1fr;
-		    gap: 20px;
-			align-items: center;
-		}
-		
-		.analysis-item {
-		    background: rgba(0, 0, 0, 0.3);
-		    padding: 20px;
-		    border-radius: 8px;
-		    border: 1px solid rgba(255, 255, 255, 0.05);
-		}
-		
-		.analysis-item h3 {
-		    margin-top: 0;
-		    font-size: 1.1rem;
 		    font-family: 'Russo One', sans-serif;
+		    color: #fff;
+		    font-size: 1.6rem;
+		    margin-bottom: 25px;
+		    display: flex;
+		    align-items: center;
+		    gap: 10px;
+		    text-transform: uppercase;
 		}
 		
-		.up-border { border-left: 4px solid #4caf50; }
-		.down-border { border-left: 4px solid #f44336; }
-		.neutral-border { border-left: 4px solid var(--accent-brass); }
-		
-		.analysis-item p {
-		    margin: 10px 0 0;
-		    font-size: 0.95rem;
-		    color: #ccc;
-		    line-height: 1.5;
+		.analysis-card {
+		    background: rgba(30, 30, 30, 0.9); /* Темний фон як на скріншоті */
+		    border-radius: 12px;
+		    padding: 25px;
+		    max-width: 600px;
+		    width: 90%;
+		    border: 1px solid rgba(255, 255, 255, 0.1);
+		    border-left: 5px solid #4caf50; /* Зелена смужка зліва */
+		    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
 		}
 		
+		.analysis-card h3 {
+		    font-family: 'Russo One', sans-serif;
+		    font-size: 1.3rem;
+		    color: #fff;
+		    margin-bottom: 15px;
+		    display: flex;
+		    justify-content: center; /* Центрує назву монети */
+		    align-items: center;
+		    gap: 10px;
+		}
+		
+		.analysis-card p {
+		    color: #bbb;
+		    font-size: 1rem;
+		    line-height: 1.6;
+		    margin: 0;
+		}
+		
+		.analysis-card b {
+		    color: #fff;
+		}
+
 		/* Адаптивність для мобілок */
 		@media (max-width: 768px) {
 		    .analysis-grid {
@@ -291,16 +300,16 @@
 		
 		<div class="market-analysis">
 		    <h2>📊 АНАЛІТИКА ТА ПРИЧИНИ ЗМІН</h2>
-		    <div class="analysis-grid">
-		        <div class="analysis-item up-border">
-		            <h3>🌕 GOLD COIN ➔ GDR</h3>
-		            <p>
-		                Курс золотого коіна зріс на <b>+2 пункти</b> через активне скуповування золотих коїнів. 
-		                Збільшення попиту на золоті монети спричинило зріст курсу.
-		            </p>
-		        </div>
+		
+		    <div class="analysis-card">
+		        <h3>🌕 GOLD COIN ➔ GDR</h3>
+		        <p>
+		            Курс золотого коіна зріс на <b>+2 пункти</b> через активне скуповування золотих коїнів. 
+		            Збільшення попиту на золоті монети спричинило зріст курсу.
+		        </p>
 		    </div>
 		</div>
+		
     </div>
 </div>
     </div>
@@ -316,6 +325,7 @@
 <script src="https://www.highperformanceformat.com/84098daf7de2c5bed744f8fab6ee74ff/invoke.js"></script>
 </body>
 </html>
+
 
 
 
