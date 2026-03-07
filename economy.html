@@ -197,6 +197,55 @@
 			box-shadow: 0 0 30px rgba(240, 165, 0, 0.6), 
 						inset 0 0 15px rgba(240, 165, 0, 0.3);
 		}
+		.market-analysis {
+		    margin-top: 40px;
+		    padding-top: 30px;
+		    border-top: 1px solid rgba(255, 255, 255, 0.1);
+		    text-align: left; /* Текст аналітики краще читається зліва */
+		}
+		
+		.market-analysis h2 {
+		    font-size: 1.5rem;
+		    margin-bottom: 25px;
+		    text-align: center;
+		}
+		
+		.analysis-grid {
+		    display: grid;
+		    grid-template-columns: 1fr 1fr;
+		    gap: 20px;
+		}
+		
+		.analysis-item {
+		    background: rgba(0, 0, 0, 0.3);
+		    padding: 20px;
+		    border-radius: 8px;
+		    border: 1px solid rgba(255, 255, 255, 0.05);
+		}
+		
+		.analysis-item h3 {
+		    margin-top: 0;
+		    font-size: 1.1rem;
+		    font-family: 'Russo One', sans-serif;
+		}
+		
+		.up-border { border-left: 4px solid #4caf50; }
+		.down-border { border-left: 4px solid #f44336; }
+		.neutral-border { border-left: 4px solid var(--accent-brass); }
+		
+		.analysis-item p {
+		    margin: 10px 0 0;
+		    font-size: 0.95rem;
+		    color: #ccc;
+		    line-height: 1.5;
+		}
+		
+		/* Адаптивність для мобілок */
+		@media (max-width: 768px) {
+		    .analysis-grid {
+		        grid-template-columns: 1fr;
+		    }
+		}
     </style>
 </head>
 <body>
@@ -238,6 +287,30 @@
                 <div class="rate-trend">0.0</div>
             </div>
         </div>
+		
+		<div class="market-analysis">
+		    <h2>📊 АНАЛІТИКА ТА ПРИЧИНИ ЗМІН</h2>
+		    
+		    <div class="analysis-grid">
+		        <div class="analysis-item up-border">
+		            <h3>🌕 GOLD COIN ➔ GDR</h3>
+		            <p>
+		                Курс золотого коіна зріс на <b>+2 пункти</b> через активне скуповування золотих коїнів. 
+		                Збільшення попиту на золоті монети спричинило зріст курсу.
+		            </p>
+		        </div>
+		    </div>
+		
+		    <div class="rule-block" style="margin-top: 20px; text-align: left; font-size: 0.9rem;">
+		        <b>Порада трейдерам:</b> Слідкуйте за активністю військових уній. Початок будівництва нових укріплень зазвичай веде до здорожчання заліза протягом 24 годин.
+		    </div>
+		</div>
+    </div>
+
+    <div class="rule-block" style="margin-top: 20px; text-align: left; font-size: 0.9rem;">
+        <b>Порада трейдерам:</b> Слідкуйте за активністю військових уній. Початок будівництва нових укріплень зазвичай веде до здорожчання заліза протягом 24 годин.
+    </div>
+</div>
     </div>
 <script>
   atOptions = {
@@ -251,6 +324,7 @@
 <script src="https://www.highperformanceformat.com/84098daf7de2c5bed744f8fab6ee74ff/invoke.js"></script>
 </body>
 </html>
+
 
 
 
